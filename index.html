@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>VIDEOJUEGO</title>
+<meta name="viewport" content="width=device-width", initial-sacle=1.0"> 
+
+<style>
+body {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #111;
+    color: white;
+}
+
+#juego {
+width: 400px;
+height: 500px;
+background: #222;
+margin: auto;
+position: relative;
+overflow: hidden;
+border: 4px solid white;
+}
+
+#jugador {
+    position: absolute;
+    font-size: 50px;
+    bottom: 20px;
+    left: 200px;
+}
+
+#obstaculo{
+    position:absolute;
+    font-size: 50px;
+    top: 60px;
+    left: 200px;
+}
+
+
+</style>
+
+
+
+
+</head>
+
+<body>
+<h1>meteorito</h1>
+<p>Puntaje: <span id="puntos">0</span> </p>
+<div id="juego">
+<div id="jugador">🚀</div>
+<div id="obstaculo">☄️</div>
+</div>
+<p>Usa flechas para moverte</p>
+
+<script>
+
+    const jugador = document.getElementById("jugador");
+
+    let posicionJugador = 200;
+
+    const obstaculo = document.getElementById("obstaculo");
+
+    let posicionObstaculo = -60;
+
+    let posicionX = 100;
+
+    let puntos = 0;
+
+
+    // MOVER JUGADOR
+
+    document.addEventListener("keydown", function(evento) {
+
+        if (evento.key === "ArrowLeft") {
+            posicionJugador -= 20;
+        }
+
+        if (evento.key === "ArrowRight") {
+            posicionJugador += 20;
+        }
+
+
+        // LÍMITE IZQUIERDO
+
+        if (posicionJugador < 0) {
+            posicionJugador = 0;
+        }
+
+
+        // LÍMITE DERECHO
+
+        if (posicionJugador > 350) {
+            posicionJugador = 350;
+        }
+
+
+        jugador.style.left = posicionJugador + "px";
+
+    });
+
+
+    // MOVER ASTEROIDE
+
+    function moverObstaculo() {
+
+        posicionObstaculo += 5;
+
+        obstaculo.style.top = posicionObstaculo + "px";
+
+
+        // SI EL ASTEROIDE SALE DE LA PANTALLA
+
+        if (posicionObstaculo > 500) {
+
+            posicionObstaculo = -10;
+
+            posicionX = Math.random() * 350;
+
+            obstaculo.style.left = posicionX + "px";
+
+            puntos += 1;
+
+            document.getElementById("puntos").innerHTML =
+                "Puntos: " + puntos;
+        }
+
+
+        // DETECTAR COLISIÓN
+
+        if (
+            posicionObstaculo > 400 &&
+            posicionX > posicionJugador - 40 &&
+            posicionX < posicionJugador + 40
+        ) {
+
+            alert("💥 ¡GAME OVER!\nPuntos: " + puntos);
+
+            location.reload();
+        }
+
+    }
+
+
+    // REPETIR EL MOVIMIENTO
+
+    setInterval(moverObstaculo, 300);
+
+</script>
+
+
+
+
+
+
+
+</body>
+
+
+
+
+</html>
+
+
