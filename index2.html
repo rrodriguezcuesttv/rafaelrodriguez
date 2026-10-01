@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Príncipe Aventurero</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="game-shell">
+    <canvas id="game" width="1600" height="900" aria-label="Juego Príncipe Aventurero"></canvas>
+
+    <div class="hud top-hud">
+      <div class="hud-card hero-card">
+        <div class="portrait">🤴</div>
+        <div><small>Puntaje</small><strong id="score">0</strong></div>
+      </div>
+      <div class="hud-card"><div class="icon coin-icon">★</div><div><small>Monedas</small><strong id="coins">0</strong></div></div>
+      <div class="hud-card lives-card"><div class="icon heart-icon">♥</div><div><small>Vidas</small><strong id="lives">♥♥♥</strong></div></div>
+      <div class="hud-card level-card"><div class="icon">🏰</div><div><small>Nivel</small><strong id="level">1</strong></div></div>
+      <button id="pauseBtn" class="pause-btn" aria-label="Pausa"><span>Ⅱ</span><small>Pausa</small></button>
+    </div>
+
+    <section class="mission-panel">
+      <h2>📋 Objetivo de la misión</h2>
+      <div class="mission-row"><span>🪙</span><div><b>Recolecta 20 monedas</b><div class="bar"><i id="coinBar"></i></div></div><strong id="coinMission">0 / 20</strong></div>
+      <div class="mission-row"><span>👾</span><div><b>Derrota 3 enemigos</b><div class="bar"><i id="enemyBar"></i></div></div><strong id="enemyMission">0 / 3</strong></div>
+      <div class="mission-row"><span>⭐</span><div><b>Llega a la meta</b><div class="bar"><i id="goalBar"></i></div></div><strong id="goalMission">0 / 1</strong></div>
+    </section>
+
+    <div class="controls left-controls">
+      <button class="control blue" id="leftBtn" aria-label="Izquierda">←</button>
+      <button class="control blue" id="rightBtn" aria-label="Derecha">→</button>
+    </div>
+    <div class="controls right-controls">
+      <button class="control red" id="attackBtn"><span>⚔</span><small>Atacar</small></button>
+      <button class="control green" id="jumpBtn"><span>↑</span><small>Saltar</small></button>
+    </div>
+
+    <div id="overlay" class="overlay hidden">
+      <div class="modal">
+        <h1 id="overlayTitle">Pausa</h1>
+        <p id="overlayText">La aventura está en pausa.</p>
+        <button id="resumeBtn">Continuar</button>
+        <button id="restartBtn">Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
