@@ -1,165 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>VIDEOJUEGO</title>
-<meta name="viewport" content="width=device-width", initial-sacle=1.0"> 
-
-<style>
-body {
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #111;
-    color: white;
-}
-
-#juego {
-width: 400px;
-height: 500px;
-background: #222;
-margin: auto;
-position: relative;
-overflow: hidden;
-border: 4px solid white;
-}
-
-#jugador {
-    position: absolute;
-    font-size: 50px;
-    bottom: 20px;
-    left: 200px;
-}
-
-#obstaculo{
-    position:absolute;
-    font-size: 50px;
-    top: 60px;
-    left: 200px;
-}
-
-
-</style>
-
-
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Príncipe Aventurero</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
-<h1>meteorito</h1>
-<p>Puntaje: <span id="puntos">0</span> </p>
-<div id="juego">
-<div id="jugador">🚀</div>
-<div id="obstaculo">☄️</div>
-</div>
-<p>Usa flechas para moverte</p>
+  <div id="game-shell">
+    <canvas id="game" width="1600" height="900" aria-label="Juego Príncipe Aventurero"></canvas>
 
-<script>
+    <div class="hud top-hud">
+      <div class="hud-card hero-card">
+        <div class="portrait">🤴</div>
+        <div><small>Puntaje</small><strong id="score">0</strong></div>
+      </div>
+      <div class="hud-card"><div class="icon coin-icon">★</div><div><small>Monedas</small><strong id="coins">0</strong></div></div>
+      <div class="hud-card lives-card"><div class="icon heart-icon">♥</div><div><small>Vidas</small><strong id="lives">♥♥♥</strong></div></div>
+      <div class="hud-card level-card"><div class="icon">🏰</div><div><small>Nivel</small><strong id="level">1</strong></div></div>
+      <button id="pauseBtn" class="pause-btn" aria-label="Pausa"><span>Ⅱ</span><small>Pausa</small></button>
+    </div>
 
-    const jugador = document.getElementById("jugador");
+    <section class="mission-panel">
+      <h2>📋 Objetivo de la misión</h2>
+      <div class="mission-row"><span>🪙</span><div><b>Recolecta 20 monedas</b><div class="bar"><i id="coinBar"></i></div></div><strong id="coinMission">0 / 20</strong></div>
+      <div class="mission-row"><span>👾</span><div><b>Derrota 3 enemigos</b><div class="bar"><i id="enemyBar"></i></div></div><strong id="enemyMission">0 / 3</strong></div>
+      <div class="mission-row"><span>⭐</span><div><b>Llega a la meta</b><div class="bar"><i id="goalBar"></i></div></div><strong id="goalMission">0 / 1</strong></div>
+    </section>
 
-    let posicionJugador = 200;
+    <div class="controls left-controls">
+      <button class="control blue" id="leftBtn" aria-label="Izquierda">←</button>
+      <button class="control blue" id="rightBtn" aria-label="Derecha">→</button>
+    </div>
+    <div class="controls right-controls">
+      <button class="control red" id="attackBtn"><span>⚔</span><small>Atacar</small></button>
+      <button class="control green" id="jumpBtn"><span>↑</span><small>Saltar</small></button>
+    </div>
 
-    const obstaculo = document.getElementById("obstaculo");
+    <div id="overlay" class="overlay hidden">
+      <div class="modal">
+        <h1 id="overlayTitle">Pausa</h1>
+        <p id="overlayText">La aventura está en pausa.</p>
+        <button id="resumeBtn">Continuar</button>
+        <button id="restartBtn">Reiniciar</button>
+      </div>
+    </div>
+  </div>
 
-    let posicionObstaculo = -60;
-
-    let posicionX = 100;
-
-    let puntos = 0;
-
-
-    // MOVER JUGADOR
-
-    document.addEventListener("keydown", function(evento) {
-
-        if (evento.key === "ArrowLeft") {
-            posicionJugador -= 20;
-        }
-
-        if (evento.key === "ArrowRight") {
-            posicionJugador += 20;
-        }
-
-
-        // LÍMITE IZQUIERDO
-
-        if (posicionJugador < 0) {
-            posicionJugador = 0;
-        }
-
-
-        // LÍMITE DERECHO
-
-        if (posicionJugador > 350) {
-            posicionJugador = 350;
-        }
-
-
-        jugador.style.left = posicionJugador + "px";
-
-    });
-
-
-    // MOVER ASTEROIDE
-
-    function moverObstaculo() {
-
-        posicionObstaculo += 5;
-
-        obstaculo.style.top = posicionObstaculo + "px";
-
-
-        // SI EL ASTEROIDE SALE DE LA PANTALLA
-
-        if (posicionObstaculo > 500) {
-
-            posicionObstaculo = -10;
-
-            posicionX = Math.random() * 350;
-
-            obstaculo.style.left = posicionX + "px";
-
-            puntos += 1;
-
-            document.getElementById("puntos").innerHTML =
-                "Puntos: " + puntos;
-        }
-
-
-        // DETECTAR COLISIÓN
-
-        if (
-            posicionObstaculo > 400 &&
-            posicionX > posicionJugador - 40 &&
-            posicionX < posicionJugador + 40
-        ) {
-
-            alert("💥 ¡GAME OVER!\nPuntos: " + puntos);
-
-            location.reload();
-        }
-
-    }
-
-
-    // REPETIR EL MOVIMIENTO
-
-    setInterval(moverObstaculo, 300);
-
-</script>
-
-
-
-
-
-
-
+  <script src="js/game.js"></script>
 </body>
-
-
-
-
 </html>
-
-
